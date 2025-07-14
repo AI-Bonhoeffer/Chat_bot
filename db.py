@@ -5,20 +5,24 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 
-# Load .env file
+# Load .env
 load_dotenv()
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
-index_name = "bonhoeffer-bot"
+pinecone_env = os.getenv("PINECONE_ENVIRONMENT")  # ✅ Required
+index_name = os.getenv("PINECONE_INDEX_NAME", "bonhoeffer-bot")  # Default if missing
+
+# ✅ Initialize Pinecone client explicitly (required with new SDK)
+pc = Pinecone(api_key=pinecone_api_key)
+index = pc.Index(index_name)
 
 def load_vector_store():
     # Initialize embeddings
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-    # Connect to Pinecone
+    # Return vector store connected to existing index
     vectorstore = PineconeVectorStore(
-        index_name=index_name,
+        index=index,
         embedding=embeddings,
-        pinecone_api_key=pinecone_api_key,
     )
 
     return vectorstore
