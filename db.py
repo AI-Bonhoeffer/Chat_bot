@@ -15,14 +15,18 @@ index_name = os.getenv("PINECONE_INDEX_NAME")
 pc = Pinecone(api_key=pinecone_api_key)
 index = pc.Index(name=index_name)
 
+# def load_vector_store():
+#     # ✅ Init HuggingFace Embeddings
+#     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
+#     # ✅ Correct usage of new PineconeVectorStore
+#     vectorstore = PineconeVectorStore.from_existing_index(
+#         index_name=index_name,
+#         embedding=embeddings
+#     )
+
+#     return vectorstore
+# db.py (debug version)
 def load_vector_store():
-    # ✅ Init HuggingFace Embeddings
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-
-    # ✅ Correct usage of new PineconeVectorStore
-    vectorstore = PineconeVectorStore.from_existing_index(
-        index_name=index_name,
-        embedding=embeddings
-    )
-
-    return vectorstore
+    print("⚠️ Skipping actual Pinecone connection for debug...")
+    return "dummy-vector-store"
