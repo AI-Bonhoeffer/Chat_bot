@@ -1,10 +1,21 @@
-openai
-python-dotenv
-twilio
+# 🟢 Streamlit + Env
 streamlit
+python-dotenv
+
+# 🧠 LangChain Core
 langchain
 langchain-community
 langchain-huggingface
-pinecone-client
 langchain-pinecone
+
+# 🤖 AI & Embedding
+openai
+tiktoken
 sentence-transformers
+transformers
+
+# 🧠 Vector DB
+pinecone-client
+
+
+twilio
