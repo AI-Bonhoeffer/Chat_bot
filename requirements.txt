@@ -1,0 +1,5 @@
+openai
+flask
+python-dotenv
+twilio
+#python retrieval_bot.py
