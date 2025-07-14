@@ -4,3 +4,6 @@ twilio
 streamlit
 langchain
 langchain-community
+langchain-huggingface
+pinecone-client
+langchain-pinecone
