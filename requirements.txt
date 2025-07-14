@@ -15,7 +15,7 @@ sentence-transformers
 transformers
 
 # 🧠 Vector DB
-pinecone-client
+pinecone
 
 
 twilio
