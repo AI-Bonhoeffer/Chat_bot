@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from app import process_user_input  # Use the same logic as Flask
+from chat_logic import process_user_input
 from dotenv import load_dotenv
 load_dotenv()
 
