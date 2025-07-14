@@ -8,7 +8,9 @@ st.set_page_config(page_title="Bonhoeffer Chatbot", page_icon="🤖")
 
 # 🧠 Init session state
 if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+    st.session_state.chat_history = [
+        {"role": "assistant", "content": "👋 Welcome to Bonhoeffer Bot! How can I help you today?"}
+    ]
 
 if "is_verified" not in st.session_state:
     st.session_state.is_verified = False
