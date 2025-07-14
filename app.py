@@ -1,18 +1,13 @@
-from flask import Flask, request
-from langchain_community.chat_models import ChatOpenAI
-from langchain.chains import RetrievalQA
-from dotenv import load_dotenv
-from twilio.twiml.messaging_response import MessagingResponse
 import os
 import time
 import re
+from dotenv import load_dotenv
+from langchain_community.chat_models import ChatOpenAI
+from langchain.chains import RetrievalQA
 from db import load_vector_store
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
-
-app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", "super-secret")
 
 verified_users = {}
 vector_store = load_vector_store()
@@ -51,22 +46,3 @@ def process_user_input(user_input, user_id):
         responses.append(qa_chain.run(user_input))
 
     return responses, is_verified
-
-@app.route("/webhook", methods=["POST"])
-def whatsapp_webhook():
-    incoming_msg = request.values.get('Body', '').strip()
-    user_id = request.values.get('From', 'unknown')
-
-    resp = MessagingResponse()
-    if not incoming_msg:
-        resp.message("⚠️ Sorry, I didn't get your message.")
-        return str(resp)
-
-    replies, _ = process_user_input(incoming_msg, user_id)
-    for reply in replies:
-        resp.message(reply)
-
-    return str(resp)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050)
