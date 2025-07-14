@@ -5,28 +5,26 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 
-# Load .env variables
+# Load .env
 load_dotenv()
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
 pinecone_env = os.getenv("PINECONE_ENVIRONMENT")
 index_name = os.getenv("PINECONE_INDEX_NAME")
 
-# ✅ Initialize Pinecone
+# ✅ Explicitly initialize Pinecone client
 pc = Pinecone(api_key=pinecone_api_key)
-index = pc.Index(name=index_name)
+index = pc.Index(index_name)
 
-# def load_vector_store():
-#     # ✅ Init HuggingFace Embeddings
-#     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-
-#     # ✅ Correct usage of new PineconeVectorStore
-#     vectorstore = PineconeVectorStore.from_existing_index(
-#         index_name=index_name,
-#         embedding=embeddings
-#     )
-
-#     return vectorstore
-# db.py (debug version)
 def load_vector_store():
-    print("⚠️ Skipping actual Pinecone connection for debug...")
-    return "dummy-vector-store"
+    # ✅ Embeddings
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+
+    # ✅ Use `from_existing_index` instead of manual client passing
+    vectorstore = PineconeVectorStore.from_existing_index(
+        index_name=index_name,
+        embedding=embeddings
+    )
+
+    return vectorstore
